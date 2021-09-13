@@ -7,29 +7,33 @@ const loadProducts = () => {
 
 // show all product in UI 
 const showProducts = (products) => {
-  // console.log(products)
   const allProducts = products.map((pd) => pd);
-  // console.log(allProducts)
+
   for (const product of allProducts) {
-    console.log(product)
     const image = product.image;
-    const div = document.createElement("div");
-    div.classList.add("product");
-    div.innerHTML = `<div class="single-product">
-      <div>
-    <img class="product-image" src=${image}></img>
-      </div>
-      <h3>${product.title}</h3>
-      <p>Category: ${product.category}</p>
-      <h5>${product.rating.rate} Out of 5</h5>
-      <h5>${product.rating.count} global ratings</h5>
-      <h2>Price: $ ${product.price}</h2>
-      <button onclick="addToCart(${product.id},${product.price})" id="addToCart-btn" class="buy-now btn btn-success">add to cart</button>
-      <button id="details-btn" class="btn btn-danger">Details</button></div>
-      `;
+
+    const div = document.createElement('div');
+    div.classList.add('col');
+    div.innerHTML = `
+       <div class="card h-100 shadow bg-light">
+                <img src=${image} class="card-img-top product-image" alt="...">
+                <div class="card-body text-center">
+                  <h5 class="card-title fs-6">${product.title}</h5>
+                  <h6 class="card-title">Category: ${product.category}</h6>
+                  <h6 class="card-title">Average Rating: ${product.rating.rate}</h6>
+                  <p class="card-title">Total Reviewer: ${product.rating.count}</p>
+                  <h4 class="card-title">Price: $ ${product.price}</h4>
+                  
+                  <button onclick="addToCart(${product.id},${product.price})" id="addToCart-btn" type="button" class="btn btn-secondary">Add to cart</button>
+                  <button type="button" id="details-btn" class="btn btn-danger">details</button>
+                </div>
+              </div>
+       `;
+
     document.getElementById("all-products").appendChild(div);
   }
 };
+// Total added products
 let count = 0;
 const addToCart = (id, price) => {
   count = count + 1;
@@ -81,7 +85,7 @@ const updateTotal = () => {
   const grandTotal =
     getInputValue("price") + getInputValue("delivery-charge") +
     getInputValue("total-tax");
-  document.getElementById("total").innerText = grandTotal;
+  document.getElementById("total").innerText = grandTotal.toFixed(2);
 };
-// updateTotal();
+
 loadProducts();
